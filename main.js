@@ -6,7 +6,7 @@ $(function() {
 		// rolls: 1000
 	};
 
-	// Click Add
+	// Click Add in shopping list
 	$('.products button').on('click', function() {
 		
 		// Get our class name resource
@@ -68,17 +68,20 @@ $(function() {
 		$('.cart').html('');
 		var num_items_in_cart = 0;
 		// Loop the entire cart, and build the whole thing
-		for (i in cart) {
+		// item_in_cart is the key
+		for (item_in_cart in cart) {
 			num_items_in_cart++;
 
 			$('<li>')
-				.append('<p>' + i + ': ' + cart[i] + '</p>')
+				.append('<p>' + item_in_cart + ': ' + cart[item_in_cart] + '</p>')
 				.append('<button>Remove One</button>')
-				.addClass("item " + i)
+				.addClass("item " + item_in_cart)
 				.appendTo('.cart');
 
 		}
 
+		//if num_items_in_cart is empty, hide the remove-all button and 
+		// print a message stating the cart is empty, as a list item
 		if (num_items_in_cart==0) {
 			$('<li>')
 				.append("Your Cart is Empty")
