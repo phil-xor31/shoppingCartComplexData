@@ -1,0 +1,90 @@
+/* css resets*/
+* {
+	margin: 0;
+	padding: 0;
+	font-family: arial;
+}
+
+/*
+	.item is in .products and in .cart 
+	It contains an image, item description, and 
+	a button (add or remove) depending where it is
+*/
+.item {
+	background-color: red;
+	padding: 5px;
+	overflow: hidden;
+}
+
+.item img {
+	width: 50px;
+	height: 50px;
+	display: block;
+	float: left;
+
+}
+
+.item p {
+	background-color: yellow;
+	width: 200px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 5px;
+	float:left;
+
+}
+
+header, footer {
+	background-color: magenta;
+	width: 960px; 	 /* 960 is industry standard page width*/ 
+	min-height: 100px;
+	margin: auto;
+}
+
+/* main contains the following 
+	aside   main-content
+*/
+main {
+	overflow: hidden;
+	width: 960px; 	 /* 960 is industry standard page width*/ 
+	margin: auto;
+	background-color: #48D95D;
+
+}
+
+/* aside is our left column*/
+aside {
+	/*margin-left: 200px;*/
+	width: 200px;
+	min-height:600px;
+	background-color: orange;
+	float: left;
+}
+
+/* main content is our main window on the page and contains
+	products
+	cart
+*/
+.main-content {
+	margin-left: 200px;
+	height: 860px;
+	padding-left: 10px;
+	/*overflow: hidden;*/
+}
+
+fieldset {
+	margin: 10px;
+}
+
+button {
+	font-size: 1.0em;
+	padding: 4px;
+}
+/* remove all button */
+.remove-all {
+	margin: 10px;
+}
+
+ul.products, ul.cart {
+	list-style-type: none; /* no bullets on items */
+}
