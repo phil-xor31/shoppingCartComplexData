@@ -1,6 +1,24 @@
 $(function() {
+	// products in our database all have unique sku value. 
+	// The sku value will stored as arbitrary data in the $('li'), 
+	// "sku": "9150", which can be set or retrieved with the .data method
 
-	// Model
+	// As soon as the DOM is ready draw our entire shopping list
+	for (var i=0; i < default_products.length; i++) {
+
+		$('<li>')
+			.append('<img src=' + default_products[i].thumbnail + '>')
+			.append('<p>SKU: '+ default_products[i].sku + ': ' + default_products[i].name +'</p>')
+			.append('<button>Add</button>')
+			.addClass('item') 
+			.data("sku", default_products[i].sku)
+			.appendTo('.products');
+
+	}
+	
+	// Shopping Cart Model is a simple dictionary with the 
+	// product sku as the key and the value is the quantity
+	// added to the cart.
 	var cart = {
 		// ricks: 1,
 		// rolls: 1000
@@ -9,16 +27,12 @@ $(function() {
 	// Click Add in shopping list
 	$('.products button').on('click', function() {
 		
-		// Get our class name resource
-		var className = $(this).parent().attr('class');
-		// item is always the first class, split string into array
-		// and get second element
-		className = className.split(' ')[1];
-		// Update our Model
-		if (cart[className]) {
-			cart[className]++;
+		// Get our sku for the product clicked
+		var skuValue = $(this).parent().data('sku');
+		if (cart[skuValue]) {
+			cart[skuValue]++;
 		} else {
-		 	cart[className] = 1;
+		 	cart[skuValue] = 1;
 		}
 
 		renderView();

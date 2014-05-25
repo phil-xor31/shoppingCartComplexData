@@ -26,7 +26,7 @@
 
 .item p {
 	background-color: yellow;
-	width: 200px;
+	width: 600px;
 	margin-left: 5px;
 	margin-right: 5px;
 	padding: 5px;
@@ -56,7 +56,7 @@ main {
 aside {
 	/*margin-left: 200px;*/
 	width: 200px;
-	min-height:600px;
+	height:860px;
 	background-color: orange;
 	float: left;
 }
@@ -87,4 +87,7 @@ button {
 
 ul.products, ul.cart {
 	list-style-type: none; /* no bullets on items */
+	height: 300px;
+	overflow: auto;
 }
+
