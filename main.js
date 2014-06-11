@@ -1,7 +1,46 @@
 $(function() {
+
+	// returns the product record for the sku passed in
+	// returns 0 if product not found
+	var getProduct = function(sku) {
+		// just looping through the array to find the matching
+		// record as eventually this will be swapped out for real database
+		var product = 0;
+
+		for (var i=0; i < default_products.length; i++) {
+			if (default_products[i].sku == sku) {
+				product = default_products[i];
+				break;
+			}
+		}
+		return product;
+
+	}
+	
+	// get name of product or empty string if not found
+	var getName = function(sku) {
+		var name = "";
+		var product = getProduct(sku);
+		if (product != 0) {
+			name = product.name;
+		}
+		return name;
+	}
+	
+	// get thumbnail of product or empty string if not found
+	var getThumbnail = function(sku) {
+		var thumbnail = "";
+		var product = getProduct(sku);
+		if (product != 0) {
+			thumbnail = product.thumbnail;
+		}
+		return thumbnail;
+	}
+
 	// products in our database all have unique sku value. 
 	// The sku value will stored as arbitrary data in the $('li'), 
 	// "sku": "9150", which can be set or retrieved with the .data method
+
 
 	// As soon as the DOM is ready draw our entire shopping list
 	for (var i=0; i < default_products.length; i++) {
@@ -9,7 +48,8 @@ $(function() {
 		$('<li>')
 			.append('<img src=' + default_products[i].thumbnail + '>')
 			.append('<p>SKU: '+ default_products[i].sku + ': ' + default_products[i].name +'</p>')
-			.append('<button>Add</button>')
+			.append('<p>' + default_products[i].description + '</p>')
+			.append('<button>Add 1</button>')
 			.addClass('item') 
 			.data("sku", default_products[i].sku)
 			.appendTo('.products');
@@ -35,7 +75,7 @@ $(function() {
 		 	cart[skuValue] = 1;
 		}
 
-		renderView();
+		renderCart();
 
 	});
 
@@ -55,7 +95,7 @@ $(function() {
 			delete cart[className];
 		}
 
-		renderView();
+		renderCart();
 	});
 
 	// Remove All
@@ -69,26 +109,29 @@ $(function() {
 		// A better way, just reset the cart object
 		cart = {};
 
-		renderView();
+		renderCart();
 		
 	});
 
 
 
-	// Render the View
-	var renderView = function() {
+	// Render the View of the Cart
+	var renderCart = function() {
 
 		// Wipe out whatever DOM is currently in the cart
 		$('.cart').html('');
-		var num_items_in_cart = 0;
+		var num_items_in_cart = 0; // number of unique items in cart
+		var total_items_in_cart = 0; // total shopping cart size
 		// Loop the entire cart, and build the whole thing
 		// item_in_cart is the key
 		for (item_in_cart in cart) {
 			num_items_in_cart++;
+			total_items_in_cart += cart[item_in_cart];
 
 			$('<li>')
-				.append('<p>' + item_in_cart + ': ' + cart[item_in_cart] + '</p>')
-				.append('<button>Remove One</button>')
+				.append('<img src=' + getThumbnail(item_in_cart) + '>')
+				.append('<p>SKU:' + item_in_cart + ' Qty: ' + cart[item_in_cart] + ', Description: ' + getName(item_in_cart) + '</p>')
+				.append('<button>Rmv 1</button>')
 				.addClass("item " + item_in_cart)
 				.appendTo('.cart');
 
@@ -105,10 +148,15 @@ $(function() {
 		else {
 			$('.remove-all').show();
 		}
+		//display total items in cart in aside
+		$('aside p').html('');
+		$('<p>')
+			.append('Cart: ' + total_items_in_cart)
+			.appendTo('aside');
 
 	}
 
 	// As soon as the page loads, we render the whole thing
-	renderView();
+	renderCart();
 
 });
